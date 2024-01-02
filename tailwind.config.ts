@@ -9,11 +9,13 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        xdd: '#778DA9',
+
         text: '#E0E1DD',
         bg: '#0D1B2A',
         primary: '#25313f',
         secondary: '#3d4854',
-        accent: '#778DA9',
+        tertiary: '#555f69',
       },
     },
   },

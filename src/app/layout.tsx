@@ -17,11 +17,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      className='absolute inset-0 overflow-hidden bg-bg text-text'
-      lang='en'
-    >
-      <body className={inter.className}>
+    <html lang='en'>
+      <body
+        className={`${inter.className} absolute inset-0 overflow-hidden bg-bg text-text font-light`}
+      >
         {children}
         <Nav />
       </body>
