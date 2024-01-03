@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description: 'very cool',
 };
 
-import Nav from '@/components/nav';
+import Nav from '@/app/lib/components/nav';
 
 export default function RootLayout({
   children,

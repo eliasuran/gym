@@ -1,16 +1,21 @@
-import Exercise from '@/components/home/exercise';
-import SearchExercise from '@/components/home/searchExercise';
-import NewExercise from '@/components/home/newExercise';
+'use server';
+
+import { cookies } from 'next/headers';
+import Header from '@/app/lib/components/home/header';
+import Exercise from '@/app/lib/components/home/exercise';
+import SearchExercise from '@/app/lib/components/home/searchExercise';
+import NewExercise from '@/app/lib/components/home/newExercise';
+import { getExercises } from './lib/utils/getExercises';
 
 export default async function Page() {
+  const exercises = await getExercises();
+  const session = cookies().get('session');
   return (
     <div className='h-full p-4 flex flex-col gap-4 text-2xl'>
-      <div className='w-full flex flex-col justify-center items-center gap-1'>
-        <h1>{new Date().toLocaleDateString('no-NO')}</h1>
-        <div className='w-full h-[1px] bg-text' />
-      </div>
+      {session && <h1>Logged in as: {session.value}</h1>}
+      <Header />
       <Exercise />
-      <SearchExercise />
+      <SearchExercise exercises={exercises} />
       <NewExercise />
     </div>
   );
