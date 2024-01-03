@@ -1,9 +1,9 @@
 'use client';
-import type { Exercises } from '@/app/lib/types/Exercise';
-import { useEffect, useState } from 'react';
+import type { QueryResultRow } from 'pg';
+import { useState } from 'react';
 
-export default function SearchExercise(props: { exercises: Exercises[] }) {
-  const [filteredExercises, setFilteredExercises] = useState<Exercises[]>(
+export default function SearchExercise(props: { exercises: QueryResultRow[] }) {
+  const [filteredExercises, setFilteredExercises] = useState<QueryResultRow[]>(
     props.exercises,
   );
 
