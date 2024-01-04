@@ -1,11 +1,11 @@
 'use server';
 
+import { getExercises } from './lib/utils/getExercises';
 import { cookies } from 'next/headers';
 import Header from '@/app/lib/components/home/header';
 import Exercise from '@/app/lib/components/home/exercise';
 import SearchExercise from '@/app/lib/components/home/searchExercise';
 import NewExercise from '@/app/lib/components/home/newExercise';
-import { getExercises } from './lib/utils/getExercises';
 
 export default async function Page() {
   const exercises = await getExercises();

@@ -10,7 +10,7 @@ export default function SearchExercise(props: { exercises: QueryResultRow[] }) {
   function searchExercise(e: React.ChangeEvent<HTMLInputElement>) {
     setFilteredExercises(
       props.exercises.filter((exercise) => {
-        return exercise.exercise
+        return exercise.name
           .toLowerCase()
           .includes(e.target.value.toLowerCase());
       }),
@@ -29,7 +29,7 @@ export default function SearchExercise(props: { exercises: QueryResultRow[] }) {
           className='h-12 w-full p-2 focus:bg-secondary outline-none'
           key={exercise.id}
         >
-          {exercise.exercise}
+          {exercise.name}
         </button>
       ))}
     </div>

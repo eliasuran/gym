@@ -1,3 +1,6 @@
-import { sql } from '@vercel/postgres';
+import { Pool } from 'pg';
 
-export const db = sql;
+export const pool = new Pool({
+  connectionString: process.env.NEON_URL,
+  ssl: true,
+});

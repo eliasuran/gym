@@ -16,7 +16,7 @@ export default function LoginForm(props: {
       });
       if (res.status === 200) {
         const data = await res.json();
-        localStorage.setItem('user_id', data.res.rows[0].id);
+        console.log(data.res.rows[0]);
       } else {
         console.log(await res.json());
       }

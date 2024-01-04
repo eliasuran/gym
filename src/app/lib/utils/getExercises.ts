@@ -1,8 +1,9 @@
-import { sql } from '@vercel/postgres';
+import { pool } from '../data';
 import type { QueryResultRow } from 'pg';
 
 export async function getExercises() {
-  const res = await sql`SELECT * FROM exercises LIMIT 1000`;
+  const client = await pool.connect();
+  const res = await client.query('SELECT * FROM exercises');
   const data: QueryResultRow[] = res.rows;
   return data;
 }
