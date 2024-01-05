@@ -9,13 +9,15 @@ export async function POST(request: Request) {
       'SELECT users.id FROM users WHERE username = $1 AND password = $2',
       [username, password],
     );
-    if (res.rowCount > 0) {
-      return NextResponse.json({ res }, { status: 200 });
-    } else {
-      return NextResponse.json('Incorrect username or password', {
-        status: 401,
-      });
-    }
+    if (res)
+      if (res.rows.length > 0) {
+        console.log('work');
+        return NextResponse.json({ res }, { status: 200 });
+      } else {
+        return NextResponse.json('Incorrect username or password', {
+          status: 401,
+        });
+      }
   } catch (error) {
     return NextResponse.json({ error }, { status: 500 });
   }
