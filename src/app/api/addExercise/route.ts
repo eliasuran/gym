@@ -3,8 +3,8 @@ import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
   const client = await pool.connect();
-  const { id } = await request.json();
-  console.log(id);
+  const { id, exercise } = await request.json();
+  console.log(id, exercise);
   try {
     const exists = await client.query('SELECT * FROM session WHERE id = $1', [
       id,

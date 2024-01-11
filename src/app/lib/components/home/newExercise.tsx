@@ -49,7 +49,6 @@ function SearchExercise(props: {
   }
 
   async function addExercise(name: string) {
-    console.log('added', name);
     const res = await fetch('/api/addExercise', {
       method: 'POST',
       headers: {
@@ -57,6 +56,7 @@ function SearchExercise(props: {
       },
       body: JSON.stringify({
         id: `${new Date().toLocaleDateString('no-NO')}${props.user}`,
+        exercise: name,
       }),
     });
     if (res.status === 200) {
@@ -74,7 +74,7 @@ function SearchExercise(props: {
       />
       {filteredExercises.slice(0, 5).map((exercise) => (
         <button
-          className='h-12 w-full p-2 focus:bg-secondary outline-none'
+          className='h-12 w-full p-2 outline-none'
           onClick={() => addExercise(exercise.name)}
           key={exercise.id}
         >
