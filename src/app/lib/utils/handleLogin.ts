@@ -3,8 +3,7 @@ export async function handleLogin(
   values: string[],
 ) {
   e.preventDefault();
-  const username = values[0];
-  const password = values[1];
+  const [username, password] = values;
   try {
     const res = await fetch('/api/login', {
       method: 'POST',
@@ -12,8 +11,7 @@ export async function handleLogin(
       body: JSON.stringify({ username, password }),
     });
     if (res.status === 200) {
-      const data = await res.json();
-      console.log(data.res.rows[0]);
+      console.log(await res.json());
     } else {
       console.log(await res.json());
     }

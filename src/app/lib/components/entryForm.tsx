@@ -6,6 +6,7 @@ export default function EntryForm(props: {
   ) => Promise<void>;
   values: string[];
   children: React.ReactNode;
+  name: string;
 }) {
   return (
     <>
@@ -14,7 +15,7 @@ export default function EntryForm(props: {
         className='z-50 fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2  p-4 flex flex-col justify-center items-center gap-4 text-green-900'
       >
         {props.children}
-        <button type='submit'>Login</button>
+        <button type='submit'>{props.name}</button>
       </form>
       <div
         className='fixed z-40 inset-0 bg-black/70'

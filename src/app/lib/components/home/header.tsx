@@ -18,6 +18,7 @@ export default function Header() {
           handleSubmit={handleRegister}
           setShow={setShowRegister}
           values={[username, password, confirmPassword]}
+          name='Register'
         >
           <Input
             onChange={(e) => setUsername(e.target.value)}
@@ -44,6 +45,7 @@ export default function Header() {
           handleSubmit={handleLogin}
           setShow={setShowLogin}
           values={[username, password]}
+          name='Login'
         >
           <Input
             onChange={(e) => setUsername(e.target.value)}
