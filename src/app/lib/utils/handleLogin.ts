@@ -11,9 +11,11 @@ export async function handleLogin(
       body: JSON.stringify({ username, password }),
     });
     if (res.status === 200) {
-      console.log(await res.json());
+      const data = await res.json();
+      console.log(data.user);
     } else {
-      console.log(await res.json());
+      const data = await res.json();
+      console.log(data.error);
     }
   } catch (error) {
     console.log(error);
