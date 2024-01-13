@@ -11,8 +11,7 @@ export async function handleLogin(
       body: JSON.stringify({ username, password }),
     });
     if (res.status === 200) {
-      const data = await res.json();
-      console.log(data.user);
+      window.location.reload();
     } else {
       const data = await res.json();
       console.log(data.error);

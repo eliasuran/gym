@@ -3,9 +3,12 @@ import { useState } from 'react';
 import EntryForm from '../entryForm';
 import { handleLogin } from '../../utils/handleLogin';
 import { handleRegister } from '../../utils/handleRegister';
+import { handleLogout } from '../../utils/handleLogout';
 import { Input } from '../input';
+import type { Session } from '../../types/session';
 
-export default function Header() {
+export default function Header(props: { session: Session }) {
+  const { session } = props;
   const [showRegister, setShowRegister] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [username, setUsername] = useState('');
@@ -64,8 +67,14 @@ export default function Header() {
       <div className='relative w-full flex flex-col justify-center items-center gap-1'>
         <h1>{new Date().toLocaleDateString('no-NO')}</h1>
         <div className='absolute right-0 flex gap-2'>
-          <h1 onClick={() => setShowRegister(true)}>Register</h1>
-          <h1 onClick={() => setShowLogin(true)}>Login</h1>
+          {session ? (
+            <h1 onClick={handleLogout}>Logout</h1>
+          ) : (
+            <>
+              <h1 onClick={() => setShowRegister(true)}>Register</h1>
+              <h1 onClick={() => setShowLogin(true)}>Login</h1>
+            </>
+          )}
         </div>
         <div className='w-full h-[1px] bg-text' />
       </div>

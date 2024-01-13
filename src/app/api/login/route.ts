@@ -1,9 +1,9 @@
 import { pool } from '@/app/lib/data';
 import { NextResponse } from 'next/server';
+import { promisify } from 'util';
 import bcrypt from 'bcrypt';
 import { v4 } from 'uuid';
 import { cookies } from 'next/headers';
-import { promisify } from 'util';
 
 export async function POST(request: Request) {
   const client = await pool.connect();

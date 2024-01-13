@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 import Nav from '@/app/lib/components/nav';
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
