@@ -7,6 +7,7 @@ export async function POST(request: Request) {
   const client = await pool.connect();
   const { username, password } = await request.json();
   const id = v4();
+  client.release();
   try {
     const hash = await bcrypt.hash(password, 10);
     await client.query(

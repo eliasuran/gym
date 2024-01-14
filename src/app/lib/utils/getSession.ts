@@ -4,6 +4,7 @@ import { cookies } from 'next/headers';
 export async function getSession() {
   const client = await pool.connect();
   const session = cookies().get('session');
+  client.release();
   if (!session) {
     return null;
   }

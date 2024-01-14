@@ -5,6 +5,7 @@ export async function POST(request: Request) {
   const client = await pool.connect();
   const { id, exercise } = await request.json();
   console.log(id, exercise);
+  client.release();
   try {
     const exists = await client.query('SELECT * FROM session WHERE id = $1', [
       id,

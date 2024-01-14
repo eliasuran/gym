@@ -9,6 +9,8 @@ export const metadata: Metadata = {
   description: 'very cool',
 };
 
+import { getSession } from './lib/utils/getSession';
+import Header from './lib/components/home/header';
 import Nav from '@/app/lib/components/nav';
 
 export default async function RootLayout({
@@ -16,13 +18,20 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getSession();
   return (
     <html lang='en'>
       <body
         className={`${inter.className} absolute inset-0 overflow-hidden bg-bg text-text font-light`}
       >
-        {children}
-        <Nav />
+        {session ? (
+          <>
+            {children}
+            <Nav />
+          </>
+        ) : (
+          <Header session={session} />
+        )}
       </body>
     </html>
   );
