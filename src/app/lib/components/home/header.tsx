@@ -65,7 +65,6 @@ export default function Header(props: { session: Session }) {
         </EntryForm>
       )}
       <div className='relative w-full flex flex-col justify-center items-center gap-1'>
-        <h1>{new Date().toLocaleDateString('no-NO')}</h1>
         <div className='absolute right-0 flex gap-2'>
           {session ? (
             <h1 onClick={handleLogout}>Logout</h1>
@@ -76,7 +75,6 @@ export default function Header(props: { session: Session }) {
             </>
           )}
         </div>
-        <div className='w-full h-[1px] bg-text' />
       </div>
     </>
   );
