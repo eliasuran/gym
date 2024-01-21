@@ -2,27 +2,34 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { CgGym } from 'react-icons/cg';
-import { MdOutlineQueryStats } from 'react-icons/md';
+import { Icon } from '@iconify/react';
 
 export default function Nav() {
-  function Button(props: { href: string; icon: JSX.Element }) {
-    return (
-      <Link
-        href={`${props.href}`}
-        className={`${
-          usePathname() === props.href && 'bg-primary'
-        } grow text-4xl grid place-items-center`}
-      >
-        {props.icon}
-      </Link>
-    );
-  }
-
   return (
-    <nav className='fixed bottom-0 w-screen h-20 border-t border-primary flex'>
-      <Button href='/' icon={<CgGym />} />
-      <Button href='/stats' icon={<MdOutlineQueryStats />} />
+    <nav className='fixed bottom-4 left-0 w-screen flex justify-around'>
+      <Button href='/' icon='iconoir:gym' name='Exercises' />
+      <Button href='/stats' icon='gridicons:stats-up' name='Stats' />
     </nav>
+  );
+}
+
+function Button(props: { href: string; icon: string; name: string }) {
+  const url = usePathname();
+  return (
+    <Link
+      href={`${props.href}`}
+      className={`${
+        url === props.href && 'text-blue-400'
+      } flex flex-col items-center`}
+    >
+      <div
+        className={`${
+          url === props.href && 'bg-primary'
+        } text-5xl w-32 py-1 rounded-full grid place-items-center`}
+      >
+        <Icon icon={props.icon} />
+      </div>
+      <p className='text-lg'>{props.name}</p>
+    </Link>
   );
 }

@@ -15,7 +15,7 @@ export default async function Page() {
   return (
     <div className='h-full p-4 flex flex-col gap-4 text-2xl'>
       <Header session={session} />
-      <NewExercise user={session?.user_username} exercises={exercises} />
+      <NewExercise session={session} exercises={exercises} />
     </div>
   );
 }

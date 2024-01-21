@@ -21,17 +21,17 @@ export default async function RootLayout({
   const session = await getSession();
   return (
     <html lang='en'>
-      <body
-        className={`${inter.className} absolute inset-0 overflow-hidden bg-bg text-text font-light`}
-      >
-        {session ? (
-          <>
-            {children}
-            <Nav />
-          </>
-        ) : (
-          <Header session={session} />
-        )}
+      <body className={`${inter.className}`}>
+        <div className='absolute inset-0 overflow-hidden bg-bg text-text font-light p-4'>
+          {session ? (
+            <>
+              {children}
+              <Nav />
+            </>
+          ) : (
+            <Header session={session} />
+          )}
+        </div>
       </body>
     </html>
   );
