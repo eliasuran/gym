@@ -1,4 +1,4 @@
-import { FaPlus } from 'react-icons/fa';
+import { Icon } from '@iconify/react';
 
 export default function AddSetInfo() {
   return (
@@ -6,7 +6,7 @@ export default function AddSetInfo() {
       <input className='w-12 bg-secondary' type='number' placeholder='kg' />
       <input className='w-12 bg-secondary' type='number' placeholder='reps' />
       <button className='w-6 h-full text-sm rounded-lg bg-tertiary grid place-items-center'>
-        <FaPlus />
+        <Icon icon='akar-icons:plus' />
       </button>
     </div>
   );
