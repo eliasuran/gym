@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description: 'very cool',
 };
 
-import { getSession } from './lib/utils/getSession';
+import { getSession } from './lib/utils/session';
 import Header from './lib/components/home/header';
 import Nav from '@/app/lib/components/nav';
 
@@ -22,7 +22,7 @@ export default async function RootLayout({
   return (
     <html lang='en'>
       <body className={`${inter.className}`}>
-        <div className='absolute inset-0 overflow-hidden bg-bg text-text font-light p-4'>
+        <div className='absolute inset-0 overflow-hidden bg-base-100 text-base-content font-light p-4'>
           {session ? (
             <>
               {children}
