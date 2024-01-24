@@ -11,7 +11,7 @@ export default async function Exercise(props: {
   return (
     <div className='bg-primary text-primary-content h-28 p-2 rounded-xl overflow-hidden text-center'>
       {sets.map((set) => (
-        <h1>
+        <h1 key={`${set.exercise_id}:${set.setNr}`}>
           {set.kg}/{set.reps}
         </h1>
       ))}

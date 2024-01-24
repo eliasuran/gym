@@ -6,13 +6,18 @@ export async function POST(request: Request) {
   const { exercise_id, kg, reps } = await request.json();
   client.release();
   try {
-    await client.query('INSERT INTO exerciseSet VALUES ($1, $2, $3)', [
+    const setNr = await client.query(
+      'SELECT * FROM exerciseSet WHERE exercise_id = $1',
+      [exercise_id],
+    );
+    await client.query('INSERT INTO exerciseSet VALUES ($1, $2, $3, $4)', [
       exercise_id,
       kg,
       reps,
+      setNr.rowCount,
     ]);
     return NextResponse.json(
-      { set: { exercise_id, kg, reps } },
+      { set: { exercise_id, kg, reps, setNr: setNr.rowCount } },
       { status: 200 },
     );
   } catch (error) {
