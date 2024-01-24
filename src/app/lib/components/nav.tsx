@@ -19,12 +19,12 @@ function Button(props: { href: string; icon: string; name: string }) {
     <Link
       href={`${props.href}`}
       className={`${
-        url === props.href && 'text-blue-400'
+        url === props.href ? 'text-primary' : 'text-primary'
       } flex flex-col items-center`}
     >
       <div
         className={`${
-          url === props.href && 'bg-primary'
+          url === props.href && 'bg-primary text-primary-content'
         } text-5xl w-32 py-1 rounded-full grid place-items-center`}
       >
         <Icon icon={props.icon} />

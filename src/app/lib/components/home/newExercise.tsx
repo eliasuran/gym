@@ -9,7 +9,7 @@ export default function NewExercise(props: {
   exercises: QueryResultRow[];
   session: Session;
 }) {
-  const [showSearch, setShowSearch] = useState(true);
+  const [showSearch, setShowSearch] = useState(false);
   return (
     <>
       {showSearch ? (
@@ -20,7 +20,7 @@ export default function NewExercise(props: {
         />
       ) : (
         <button
-          className='w-16 aspect-square text-3xl rounded-2xl bg-primary grid place-items-center'
+          className='h-12 text-3xl btn btn-primary text-primary-content grid place-items-center'
           onClick={() => setShowSearch(true)}
         >
           <Icon icon='akar-icons:plus' />
@@ -50,7 +50,6 @@ function SearchExercise(props: {
   }
 
   async function addExercise(id: string) {
-    console.log(id);
     const res = await fetch('/api/addExercise', {
       method: 'POST',
       headers: {
@@ -73,10 +72,10 @@ function SearchExercise(props: {
 
   return (
     <div className='overflow-hidden flex flex-col gap-2'>
-      <div className='flex items-center gap-2 px-4 py-1 bg-primary rounded-xl text-3xl '>
+      <div className='flex items-center gap-2 px-4 py-1 bg-primary text-primary-content rounded-xl text-3xl '>
         <Icon icon='carbon:search' />
         <input
-          className='h-12 w-full bg-transparent outline-none text-lg'
+          className='h-12 w-full bg-transparent outline-none text-lg placeholder:text-primary-content'
           onChange={(e) => searchExercise(e)}
           placeholder='Search for exercise'
         />
@@ -84,7 +83,7 @@ function SearchExercise(props: {
       <div className='bg-primary rounded-xl overflow-hidden'>
         {filteredExercises.slice(0, 5).map((exercise) => (
           <div
-            className='w-full border-b border-secondary flex items-center gap-3 px-4 py-3'
+            className='w-full border-b border-primary-content flex items-center gap-3 px-4 py-3 text-primary-content'
             key={exercise.id}
           >
             <Icon icon='carbon:search' />

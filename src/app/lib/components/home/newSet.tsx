@@ -1,8 +1,11 @@
 import { Icon } from '@iconify/react';
 
-export default function NewSet() {
+export default function NewSet(props: { open: (show: boolean) => void }) {
   return (
-    <button className='w-14 aspect-square text-3xl rounded-2xl bg-secondary grid place-items-center'>
+    <button
+      onClick={() => props.open(true)}
+      className='btn btn-secondary grid place-items-center'
+    >
       <Icon icon='akar-icons:plus' />
     </button>
   );

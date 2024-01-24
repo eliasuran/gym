@@ -1,5 +1,6 @@
 import { pool } from '@/app/lib/data';
 import { NextResponse } from 'next/server';
+import { v4 } from 'uuid';
 
 export async function POST(request: Request) {
   const client = await pool.connect();
@@ -16,7 +17,11 @@ export async function POST(request: Request) {
         date,
       ]);
     }
-    await client.query('INSERT INTO exercise VALUES ($1, $2)', [id, exercise]);
+    await client.query('INSERT INTO exercise VALUES ($1, $2, $3)', [
+      v4(),
+      id,
+      exercise,
+    ]);
     return NextResponse.json({ session: exists.rows[0] }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ error }, { status: 500 });
