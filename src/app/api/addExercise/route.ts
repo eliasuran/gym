@@ -22,7 +22,7 @@ export async function POST(request: Request) {
       id,
       exercise,
     ]);
-    return NextResponse.json({ session: exists.rows[0] }, { status: 200 });
+    return NextResponse.json({ status: 200 });
   } catch (error) {
     return NextResponse.json({ error }, { status: 500 });
   }

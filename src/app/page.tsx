@@ -1,5 +1,3 @@
-'use server';
-
 import { pool } from './lib/data';
 import type { PoolClient } from 'pg';
 import { getSession } from './lib/utils/session';
@@ -26,7 +24,11 @@ export default async function Page() {
           client={client}
         />
       ))}
-      <NewExercise session={session} exercises={exercises} />
+      <NewExercise
+        session={session}
+        exercises={exercises}
+        addedExercises={addedExercises}
+      />
     </div>
   );
 }

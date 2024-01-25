@@ -10,7 +10,7 @@ export default async function Exercise(props: {
   const sets = await getExerciseSets(props.client, props.exercise_id);
   console.log(sets);
   return (
-    <div className='bg-primary text-primary-content h-28 p-2 rounded-xl overflow-hidden text-center'>
+    <div className='bg-primary text-primary-content p-2 card overflow-hidden text-center'>
       {sets.map((set) => (
         <h1 key={`${set.exercise_id}:${set.setnr}`}>
           {set.kg}/{set.reps}
