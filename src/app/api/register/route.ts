@@ -1,10 +1,10 @@
-import { pool } from '@/app/lib/data';
+import { connect } from '@/app/lib/data';
 import { NextResponse } from 'next/server';
 import { v4 } from 'uuid';
 import bcrypt from 'bcrypt';
 
 export async function POST(request: Request) {
-  const client = await pool.connect();
+  const client = await connect();
   const { username, password } = await request.json();
   const id = v4();
   client.release();

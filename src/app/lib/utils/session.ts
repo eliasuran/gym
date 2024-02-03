@@ -1,10 +1,9 @@
-import { pool } from '../data';
+import { connect } from '../data';
 import { cookies } from 'next/headers';
 
 export async function getSession() {
-  const client = await pool.connect();
+  const client = await connect();
   const session = cookies().get('session');
-  client.release();
   if (!session) {
     return null;
   }

@@ -8,7 +8,6 @@ export default async function Exercise(props: {
   client: PoolClient;
 }) {
   const sets = await getExerciseSets(props.client, props.exercise_id);
-  console.log(sets);
   return (
     <div className='bg-primary text-primary-content p-2 card overflow-hidden text-center'>
       {sets.map((set) => (

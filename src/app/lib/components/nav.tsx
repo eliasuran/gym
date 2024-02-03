@@ -6,7 +6,7 @@ import { Icon } from '@iconify/react';
 
 export default function Nav() {
   return (
-    <nav className='z-40 fixed bottom-4 left-0 w-screen flex justify-around'>
+    <nav className='z-40 fixed bottom-4 left-0 w-screen bg-base-100 flex justify-around'>
       <Button href='/' icon='iconoir:gym' name='Exercises' />
       <Button href='/stats' icon='gridicons:stats-up' name='Stats' />
     </nav>

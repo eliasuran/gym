@@ -1,11 +1,10 @@
-import { pool } from '@/app/lib/data';
+import { connect } from '@/app/lib/data';
 import { NextResponse } from 'next/server';
 import { v4 } from 'uuid';
 
 export async function POST(request: Request) {
-  const client = await pool.connect();
+  const client = await connect();
   const { id, user, date, exercise } = await request.json();
-  client.release();
   try {
     const exists = await client.query('SELECT * FROM session WHERE id = $1', [
       id,

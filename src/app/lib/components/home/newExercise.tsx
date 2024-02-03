@@ -54,12 +54,11 @@ function SearchExercise(props: {
     if (res.status === 200) {
       console.log(await res.json());
     }
-    setShowSearch(false);
   }
 
   return (
     <div className='overflow-hidden flex flex-col gap-2'>
-      <div className='flex items-center gap-2 px-4 py-1 bg-primary text-primary-content rounded-xl text-3xl '>
+      <div className='flex items-center gap-2 px-4 py-1 bg-primary text-primary-content input outline-none text-3xl '>
         <Icon icon='carbon:search' />
         <input
           className='h-12 w-full bg-transparent outline-none text-lg placeholder:text-primary-content'
@@ -70,20 +69,16 @@ function SearchExercise(props: {
         />
       </div>
       {showSearch && (
-        <div className='bg-primary rounded-xl overflow-hidden'>
+        <div className='bg-primary card overflow-hidden'>
           {filteredExercises.slice(0, 5).map((exercise) => (
-            <div
+            <button
+              onMouseDown={() => addExercise(exercise.id)}
               className='w-full border-b border-primary-content flex items-center gap-3 px-4 py-3 text-primary-content'
               key={exercise.id}
             >
               <Icon icon='carbon:search' />
-              <button
-                className='text-lg'
-                onMouseDown={() => addExercise(exercise.id)}
-              >
-                {exercise.name}
-              </button>
-            </div>
+              <span className='text-lg'>{exercise.name}</span>
+            </button>
           ))}
         </div>
       )}

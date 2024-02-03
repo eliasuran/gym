@@ -1,10 +1,9 @@
-import { pool } from '@/app/lib/data';
+import { connect } from '@/app/lib/data';
 import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
-  const client = await pool.connect();
+  const client = await connect();
   const { exercise_id, kg, reps } = await request.json();
-  client.release();
   try {
     const setNr = await client.query(
       'SELECT * FROM exerciseSet WHERE exercise_id = $1',

@@ -1,11 +1,10 @@
-import { pool } from '@/app/lib/data';
+import { connect } from '@/app/lib/data';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export async function POST(request: NextRequest) {
-  const client = await pool.connect();
+  const client = await connect();
   const session = request.cookies.get('session');
-  client.release();
   if (!session) {
     return NextResponse.json(
       { message: 'Already logged out' },

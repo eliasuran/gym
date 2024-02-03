@@ -5,7 +5,6 @@ import { Session } from '../types/session';
 export async function getExercises(client: PoolClient) {
   const res = await client.query('SELECT * FROM exercises');
   const data: QueryResultRow[] = res.rows;
-  client.release();
   return data;
 }
 

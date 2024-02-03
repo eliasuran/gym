@@ -1,4 +1,4 @@
-import { pool } from './lib/data';
+import { connect } from './lib/data';
 import type { PoolClient } from 'pg';
 import { getSession } from './lib/utils/session';
 import type { Session } from './lib/types/session';
@@ -9,7 +9,7 @@ import NewExercise from '@/app/lib/components/home/newExercise';
 import Exercise from './lib/components/home/exercise';
 
 export default async function Page() {
-  const client: PoolClient = await pool.connect();
+  const client: PoolClient = await connect();
   const session: Session = await getSession();
   const exercises = await getExercises(client);
   const addedExercises = await getAddedExercises(client, session);
