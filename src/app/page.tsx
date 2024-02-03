@@ -5,7 +5,6 @@ import type { Session } from './lib/types/session';
 import { getExercises, getAddedExercises } from './lib/utils/exercises';
 import Header from '@/app/lib/components/home/header';
 import NewExercise from '@/app/lib/components/home/newExercise';
-
 import Exercise from './lib/components/home/exercise';
 
 export default async function Page() {
