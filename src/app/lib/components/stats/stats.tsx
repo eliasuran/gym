@@ -8,13 +8,15 @@ export default function Stats(props: { exercises: QueryResultRow[] }) {
   const [selectedExercise, setSelectedExercise] = useState<QueryResultRow>(
     props.exercises[0],
   );
+
+  const tempStats = [1, 2];
   return (
     <>
       <div className='flex justify-between'>
         <Selector items={props.exercises} setSelected={setSelectedExercise} />
       </div>
       <h1>slected: {selectedExercise.name}</h1>
-      <LineChart />
+      <LineChart labels={props.exercises} stats={tempStats} />
     </>
   );
 }

@@ -38,7 +38,7 @@ export const LineChart = (props: { labels: QueryResultRow[]; stats: any }) => {
   };
 
   const data: ChartData<'line'> = {
-    labels: props.labels,
+    labels: props.labels.map((label) => label.name),
     datasets: [
       {
         label: 'dataset',
