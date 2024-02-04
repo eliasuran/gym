@@ -18,11 +18,20 @@ export async function getAddedExercises(client: PoolClient, session: Session) {
   return data;
 }
 
-export async function getExerciseSets(client: PoolClient, exercise_id: string) {
-  const res = await client.query(
-    'SELECT * FROM exerciseSet WHERE exercise_id = $1',
-    [exercise_id],
-  );
-  const data: QueryResultRow[] = res.rows;
-  return data;
+export interface Set {
+  exercise_id: string;
+  kg: number;
+  reps: number;
+  setnr: number;
+}
+
+export async function getExerciseSets(exercise_id: string) {
+  const res = await fetch(`/api/sets/?exercise_id=${exercise_id}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  return await res.json();
 }
