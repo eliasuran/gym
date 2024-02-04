@@ -1,15 +1,24 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Dispatch, SetStateAction } from 'react';
+import type { Set } from '../../utils/exercises';
 import { Icon } from '@iconify/react';
 
-export default function AddSetInfo(props: { exercise_id: string }) {
+export default function AddSetInfo(props: {
+  exercise_id: string;
+  set: Set[];
+  setSet: Dispatch<SetStateAction<Set[]>>;
+}) {
   const [kg, setKg] = useState('');
   const [reps, setReps] = useState('');
   async function addSet(e: React.FormEvent<HTMLFormElement>) {
+    props.setSet([
+      ...props.set,
+      { exercise_id: props.exercise_id, kg: kg, reps: reps },
+    ] as Set[]);
     try {
       e.preventDefault();
-      await fetch('api/addSet', {
+      await fetch('api/sets', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

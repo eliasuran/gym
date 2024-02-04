@@ -1,5 +1,22 @@
 import { connect } from '@/app/lib/data';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
+
+export async function GET(request: NextRequest) {
+  const client = await connect();
+  const exercise_id = request.nextUrl.searchParams.get('exercise_id');
+  try {
+    const res = await client.query(
+      'SELECT * FROM exerciseSet WHERE exercise_id = $1',
+      [exercise_id],
+    );
+    if (res.rowCount === 0) {
+      return NextResponse.json({ sets: [] }, { status: 200 });
+    }
+    return NextResponse.json({ sets: res.rows }, { status: 200 });
+  } catch (error) {
+    return NextResponse.json({ error }, { status: 500 });
+  }
+}
 
 export async function POST(request: Request) {
   const client = await connect();

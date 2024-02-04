@@ -1,22 +1,25 @@
+import { useState, useEffect } from 'react';
 import SetClient from './setClient';
-import { getExerciseSets } from '../../utils/exercises';
-import { PoolClient } from 'pg';
+import { Set, getExerciseSets } from '../../utils/exercises';
 
-export default async function Exercise(props: {
+export default function Exercise(props: {
   exercise_id: string;
   exercise: string;
-  client: PoolClient;
 }) {
-  const sets = await getExerciseSets(props.client, props.exercise_id);
+  const [set, setSet] = useState([] as Set[]);
+
+  useEffect(() => {
+    getExerciseSets(props.exercise_id).then((data) => setSet(data.sets));
+  }, []);
   return (
     <div className='bg-primary text-primary-content p-2 card overflow-hidden text-center'>
-      {sets.map((set) => (
+      {set.map((set: Set) => (
         <h1 key={`${set.exercise_id}:${set.setnr}`}>
           {set.kg}/{set.reps}
         </h1>
       ))}
       <h2>{props.exercise}</h2>
-      <SetClient exercise_id={props.exercise_id} />
+      <SetClient exercise_id={props.exercise_id} set={set} setSet={setSet} />
     </div>
   );
 }

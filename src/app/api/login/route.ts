@@ -8,7 +8,6 @@ import { cookies } from 'next/headers';
 export async function POST(request: Request) {
   const client = await connect();
   const { username, password } = await request.json();
-  client.release();
   try {
     const user = await client.query(
       'SELECT password FROM users WHERE username = $1',
