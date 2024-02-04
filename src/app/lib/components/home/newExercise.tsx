@@ -4,6 +4,7 @@ import { Icon } from '@iconify/react';
 import type { QueryResultRow } from 'pg';
 import { useState } from 'react';
 import { Session } from '../../types/session';
+import { v4 } from 'uuid';
 
 export default function NewExercise(props: {
   exercises: QueryResultRow[];
@@ -35,6 +36,7 @@ function SearchExercise(props: {
   );
 
   function searchExercise(e: React.ChangeEvent<HTMLInputElement>) {
+    console.log(props.addedExercises);
     setFilteredExercises(
       props.exercises.filter((exercise) => {
         return exercise.name
@@ -44,34 +46,37 @@ function SearchExercise(props: {
     );
   }
 
-  function addExerciseClient(name: string) {
+  function addExerciseClient(exercise_name: string) {
+    const id = v4();
     props.setAddedExercises([
       ...props.addedExercises,
       {
-        id: `${new Date().toLocaleDateString('no-NO')}${
+        id,
+        session_id: `${new Date().toLocaleDateString('no-NO')}${
           props.session.user_username
         }`,
-        date: new Date().toLocaleDateString('no-NO'),
-        user: props.session.user_id,
-        exercise: name,
+        name: exercise_name,
       },
     ]);
+
+    return id;
   }
 
-  async function addExercise(id: string, name: string) {
-    addExerciseClient(name);
+  async function addExercise(exercise_id: number, exercise_name: string) {
+    const id: string = addExerciseClient(exercise_name);
     const res = await fetch('/api/addExercise', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        id: `${new Date().toLocaleDateString('no-NO')}${
+        exercise_id: id,
+        session_id: `${new Date().toLocaleDateString('no-NO')}${
           props.session.user_username
         }`,
         date: new Date().toLocaleDateString('no-NO'),
         user: props.session.user_id,
-        exercise: id,
+        exercise: exercise_id,
       }),
     });
     if (res.status === 200) {
