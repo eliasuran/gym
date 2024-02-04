@@ -9,10 +9,16 @@ export default function NewExercise(props: {
   exercises: QueryResultRow[];
   session: Session;
   addedExercises: QueryResultRow[];
+  setAddedExercises: (exercises: QueryResultRow[]) => void;
 }) {
   return (
     <>
-      <SearchExercise exercises={props.exercises} session={props.session} />
+      <SearchExercise
+        exercises={props.exercises}
+        session={props.session}
+        addedExercises={props.addedExercises}
+        setAddedExercises={props.setAddedExercises}
+      />
     </>
   );
 }
@@ -20,6 +26,8 @@ export default function NewExercise(props: {
 function SearchExercise(props: {
   exercises: QueryResultRow[];
   session: Session;
+  addedExercises: QueryResultRow[];
+  setAddedExercises: (exercises: QueryResultRow[]) => void;
 }) {
   const [showSearch, setShowSearch] = useState(false);
   const [filteredExercises, setFilteredExercises] = useState<QueryResultRow[]>(
@@ -36,7 +44,22 @@ function SearchExercise(props: {
     );
   }
 
-  async function addExercise(id: string) {
+  function addExerciseClient(name: string) {
+    props.setAddedExercises([
+      ...props.addedExercises,
+      {
+        id: `${new Date().toLocaleDateString('no-NO')}${
+          props.session.user_username
+        }`,
+        date: new Date().toLocaleDateString('no-NO'),
+        user: props.session.user_id,
+        exercise: name,
+      },
+    ]);
+  }
+
+  async function addExercise(id: string, name: string) {
+    addExerciseClient(name);
     const res = await fetch('/api/addExercise', {
       method: 'POST',
       headers: {
@@ -72,7 +95,7 @@ function SearchExercise(props: {
         <div className='bg-primary card overflow-hidden'>
           {filteredExercises.slice(0, 5).map((exercise) => (
             <button
-              onMouseDown={() => addExercise(exercise.id)}
+              onMouseDown={() => addExercise(exercise.id, exercise.name)}
               className='w-full border-b border-primary-content flex items-center gap-3 px-4 py-3 text-primary-content'
               key={exercise.id}
             >
