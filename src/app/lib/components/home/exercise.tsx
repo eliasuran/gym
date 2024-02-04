@@ -10,7 +10,7 @@ export default function Exercise(props: {
 
   useEffect(() => {
     getExerciseSets(props.exercise_id).then((data) => setSet(data.sets));
-  }, []);
+  }, [props.exercise_id]);
   return (
     <div className='bg-primary text-primary-content p-2 card overflow-hidden text-center'>
       {set.map((set: Set) => (

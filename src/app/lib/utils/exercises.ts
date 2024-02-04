@@ -25,6 +25,24 @@ export interface Set {
   setnr: number;
 }
 
+export async function addExerciseSet(
+  exercise_id: string,
+  kg: number,
+  reps: number,
+) {
+  await fetch('api/sets', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      exercise_id: exercise_id,
+      kg: kg,
+      reps: reps,
+    }),
+  });
+}
+
 export async function getExerciseSets(exercise_id: string) {
   const res = await fetch(`/api/sets/?exercise_id=${exercise_id}`, {
     method: 'GET',

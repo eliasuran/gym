@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, Dispatch, SetStateAction } from 'react';
-import type { Set } from '../../utils/exercises';
+import { addExerciseSet, type Set } from '../../utils/exercises';
 import { Icon } from '@iconify/react';
 
 export default function AddSetInfo(props: {
@@ -16,22 +16,8 @@ export default function AddSetInfo(props: {
       ...props.set,
       { exercise_id: props.exercise_id, kg: kg, reps: reps },
     ] as Set[]);
-    try {
-      e.preventDefault();
-      await fetch('api/sets', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          exercise_id: props.exercise_id,
-          kg: kg,
-          reps: reps,
-        }),
-      });
-    } catch (error) {
-      console.log(error);
-    }
+    e.preventDefault();
+    await addExerciseSet(props.exercise_id, parseInt(kg), parseInt(reps));
   }
 
   return (
