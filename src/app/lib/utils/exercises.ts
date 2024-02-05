@@ -1,5 +1,4 @@
 import type { QueryResultRow } from 'pg';
-import type { PoolClient } from 'pg';
 import { Session } from '../types/session';
 
 export interface Exercises {
@@ -24,7 +23,17 @@ export async function getAddedExercises(query: any, session: Session) {
   return data;
 }
 
-export async function deleteExercise(exercise_id: string) {}
+export async function deleteExercise(exercise_id: string) {
+  await fetch('api/exercises', {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      exercise_id: exercise_id,
+    }),
+  });
+}
 
 /////// SETS ///////
 export interface Set {

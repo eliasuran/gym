@@ -29,6 +29,9 @@ export async function POST(request: NextRequest) {
 export async function DELETE(request: NextRequest) {
   const { exercise_id } = await request.json();
   try {
+    await query('DELETE FROM exerciseSet WHERE exercise_id = $1', [
+      exercise_id,
+    ]);
     await query('DELETE FROM exercise WHERE id = $1', [exercise_id]);
     return NextResponse.json({ status: 200 });
   } catch (error) {
