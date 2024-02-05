@@ -13,6 +13,11 @@ export default function SetClient(props: {
   const [showNewSet, setShowNewSet] = useState(false);
   return (
     <div className='flex flex-wrap gap-4 h-16 items-center'>
+      {props.set.map((set: Set) => (
+        <h1 key={`${set.exercise_id}:${set.setnr}`}>
+          {set.kg}/{set.reps}
+        </h1>
+      ))}
       {showNewSet && (
         <AddSetInfo
           exercise_id={props.exercise_id}

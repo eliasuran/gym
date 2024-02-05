@@ -1,4 +1,4 @@
-import { connect } from '@/app/lib/data';
+import { query } from '@/app/lib/data';
 import { NextResponse } from 'next/server';
 import { promisify } from 'util';
 import bcrypt from 'bcrypt';
@@ -6,13 +6,11 @@ import { v4 } from 'uuid';
 import { cookies } from 'next/headers';
 
 export async function POST(request: Request) {
-  const client = await connect();
   const { username, password } = await request.json();
   try {
-    const user = await client.query(
-      'SELECT password FROM users WHERE username = $1',
-      [username],
-    );
+    const user = await query('SELECT password FROM users WHERE username = $1', [
+      username,
+    ]);
     if (user.rows.length > 0) {
       const result = await promisify(bcrypt.compare)(
         password,
@@ -26,13 +24,13 @@ export async function POST(request: Request) {
         );
       }
 
-      const res = await client.query(
+      const res = await query(
         'SELECT users.id FROM users WHERE username = $1 AND password = $2',
         [username, user.rows[0].password],
       );
 
       const sessionId = v4();
-      await client.query(
+      await query(
         'INSERT INTO login_sessions (id, user_id, user_username) VALUES ($1, $2, $3)',
         [sessionId, res.rows[0].id, username],
       );

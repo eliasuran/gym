@@ -1,6 +1,6 @@
 import type { Session } from '../types/session';
 import { getSession } from './session';
-import { connect } from '../data';
+import { query } from '../data';
 
 export interface Stat {
   id: string;
@@ -24,9 +24,8 @@ export interface Stat {
 }
 
 export async function getStats() {
-  const client = await connect();
   const session: Session = await getSession();
-  const stats = await client.query(
+  const stats = await query(
     `SELECT 
       session.id, 
       session.date, 

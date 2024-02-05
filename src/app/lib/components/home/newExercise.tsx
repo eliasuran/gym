@@ -64,7 +64,7 @@ function SearchExercise(props: {
 
   async function addExercise(exercise_id: number, exercise_name: string) {
     const id: string = addExerciseClient(exercise_name);
-    const res = await fetch('/api/addExercise', {
+    const res = await fetch('/api/exercises', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

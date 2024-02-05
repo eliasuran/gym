@@ -2,15 +2,21 @@ import type { QueryResultRow } from 'pg';
 import type { PoolClient } from 'pg';
 import { Session } from '../types/session';
 
-export async function getExercises(client: PoolClient) {
-  const res = await client.query('SELECT * FROM exercises');
+export interface Exercises {
+  id: number;
+  exercise: string;
+}
+
+/////// EXERCISES ///////
+export async function getExercises(query: any) {
+  const res = await query('SELECT * FROM exercises');
   const data: QueryResultRow[] = res.rows;
   return data;
 }
 
-export async function getAddedExercises(client: PoolClient, session: Session) {
+export async function getAddedExercises(query: any, session: Session) {
   const id = new Date().toLocaleDateString('no-NO') + session.user_username;
-  const res = await client.query(
+  const res = await query(
     'SELECT exercise.*, exercises.name FROM exercise JOIN exercises ON exercise.exercise_id=exercises.id WHERE session_id = $1',
     [id],
   );
@@ -18,6 +24,9 @@ export async function getAddedExercises(client: PoolClient, session: Session) {
   return data;
 }
 
+export async function deleteExercise(exercise_id: string) {}
+
+/////// SETS ///////
 export interface Set {
   exercise_id: string;
   kg: number;
@@ -30,7 +39,7 @@ export async function addExerciseSet(
   kg: number,
   reps: number,
 ) {
-  await fetch('api/sets', {
+  const res = await fetch('api/sets', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -41,6 +50,10 @@ export async function addExerciseSet(
       reps: reps,
     }),
   });
+
+  if (res.status !== 200) {
+    console.error('Failed to add set');
+  }
 }
 
 export async function getExerciseSets(exercise_id: string) {

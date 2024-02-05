@@ -1,11 +1,10 @@
-import { connect } from '@/app/lib/data';
+import { query } from '@/app/lib/data';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest) {
-  const client = await connect();
   const exercise_id = request.nextUrl.searchParams.get('exercise_id');
   try {
-    const res = await client.query(
+    const res = await query(
       'SELECT * FROM exerciseSet WHERE exercise_id = $1',
       [exercise_id],
     );
@@ -19,14 +18,13 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: Request) {
-  const client = await connect();
   const { exercise_id, kg, reps } = await request.json();
   try {
-    const setNr = await client.query(
+    const setNr = await query(
       'SELECT * FROM exerciseSet WHERE exercise_id = $1',
       [exercise_id],
     );
-    await client.query('INSERT INTO exerciseSet VALUES ($1, $2, $3, $4)', [
+    await query('INSERT INTO exerciseSet VALUES ($1, $2, $3, $4)', [
       exercise_id,
       kg,
       reps,

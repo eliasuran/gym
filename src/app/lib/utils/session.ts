@@ -1,13 +1,12 @@
-import { connect } from '../data';
+import { query } from '../data';
 import { cookies } from 'next/headers';
 
 export async function getSession() {
-  const client = await connect();
   const session = cookies().get('session');
   if (!session) {
     return null;
   }
-  const loginSession = await client.query(
+  const loginSession = await query(
     'SELECT * FROM login_sessions WHERE id = $1',
     [session.value],
   );

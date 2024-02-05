@@ -1,12 +1,11 @@
-import { connect } from '../lib/data';
+import { query } from '../lib/data';
 import { getExercises } from '../lib/utils/exercises';
 import { Stat, getStats } from '../lib/utils/stats';
 import Stats from '../lib/components/stats/stats';
 
 export default async function Page() {
-  const client = await connect();
   const stats: Stat[] = await getStats();
-  const exercises = await getExercises(client);
+  const exercises = await getExercises(query);
   return (
     <div>
       <Stats exercises={exercises} />
