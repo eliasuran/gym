@@ -29,12 +29,14 @@ export default function AddSetInfo(props: {
         className='w-12 bg-transparent placeholder:text-secondary-content'
         type='number'
         placeholder='kg'
+        value={kg}
         onChange={(e) => setKg(e.target.value)}
       />
       <input
         className='w-12 bg-transparent placeholder:text-secondary-content'
         type='number'
         placeholder='reps'
+        value={reps}
         onChange={(e) => setReps(e.target.value)}
       />
       <button
