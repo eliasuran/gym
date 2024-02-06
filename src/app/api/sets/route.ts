@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
   }
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   const { exercise_id, kg, reps } = await request.json();
   try {
     const setNr = await query(
@@ -34,6 +34,35 @@ export async function POST(request: Request) {
       { set: { exercise_id, kg, reps, setNr: setNr.rowCount } },
       { status: 200 },
     );
+  } catch (error) {
+    return NextResponse.json({ error }, { status: 500 });
+  }
+}
+
+export async function PUT(request: NextRequest) {
+  const { exercise_id, setnr, kg, reps } = await request.json();
+  try {
+    await query(
+      'UPDATE exerciseSet SET kg = $1, reps = $2 WHERE exercise_id = $3 AND setnr = $4',
+      [kg, reps, exercise_id, setnr],
+    );
+    return NextResponse.json(
+      { message: 'Set updated', set: { exercise_id, kg, reps, setnr } },
+      { status: 200 },
+    );
+  } catch (error) {
+    return NextResponse.json({ error }, { status: 500 });
+  }
+}
+
+export async function DELETE(request: NextRequest) {
+  const { exercise_id, setnr } = await request.json();
+  try {
+    await query(
+      'DELETE FROM exerciseSet WHERE exercise_id = $1 AND setnr = $2',
+      [exercise_id, setnr],
+    );
+    return NextResponse.json({ message: 'Set deleted' }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ error }, { status: 500 });
   }

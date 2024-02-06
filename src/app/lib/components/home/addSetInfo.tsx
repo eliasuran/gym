@@ -3,11 +3,13 @@
 import { useState, Dispatch, SetStateAction } from 'react';
 import { addExerciseSet, type Set } from '../../utils/exercises';
 import { Icon } from '@iconify/react';
+import { Input } from '../Input';
 
 export default function AddSetInfo(props: {
   exercise_id: string;
   set: Set[];
   setSet: Dispatch<SetStateAction<Set[]>>;
+  setShowNewSet: Dispatch<SetStateAction<boolean>>;
 }) {
   const [kg, setKg] = useState('');
   const [reps, setReps] = useState('');
@@ -18,6 +20,7 @@ export default function AddSetInfo(props: {
     ] as Set[]);
     e.preventDefault();
     await addExerciseSet(props.exercise_id, parseInt(kg), parseInt(reps));
+    props.setShowNewSet(false);
   }
 
   return (
@@ -25,15 +28,13 @@ export default function AddSetInfo(props: {
       onSubmit={(e) => addSet(e)}
       className='bg-secondary btn btn-secondary text-xl rounded-xl flex gap-2 items-center'
     >
-      <input
-        className='w-12 bg-transparent placeholder:text-secondary-content'
+      <Input
         type='number'
         placeholder='kg'
         value={kg}
         onChange={(e) => setKg(e.target.value)}
       />
-      <input
-        className='w-12 bg-transparent placeholder:text-secondary-content'
+      <Input
         type='number'
         placeholder='reps'
         value={reps}

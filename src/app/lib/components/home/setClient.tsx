@@ -4,7 +4,8 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import AddSetInfo from './addSetInfo';
 import NewSet from './newSet';
 import type { Set } from '../../utils/exercises';
-import { addExerciseSet } from '../../utils/exercises';
+import { editExerciseSet, deleteExerciseSet } from '../../utils/exercises';
+import { Input } from '../Input';
 
 export default function SetClient(props: {
   exercise_id: string;
@@ -12,18 +13,9 @@ export default function SetClient(props: {
   setSet: Dispatch<SetStateAction<Set[]>>;
 }) {
   const [showNewSet, setShowNewSet] = useState(false);
-  async function addSet(
-    e: React.FormEvent<HTMLFormElement>,
-    kg: string,
-    reps: string,
-  ) {
-    props.setSet([
-      ...props.set,
-      { exercise_id: props.exercise_id, kg: kg, reps: reps },
-    ] as Set[]);
-    e.preventDefault();
-    await addExerciseSet(props.exercise_id, parseInt(kg), parseInt(reps));
-  }
+
+  const [kg, setKg] = useState(0);
+  const [reps, setReps] = useState(0);
   return (
     <div className='flex p-2 flex-wrap gap-4 min-h-16 items-center'>
       {props.set.map((set: Set) => (
@@ -47,9 +39,39 @@ export default function SetClient(props: {
             </div>
           </button>
           <dialog id={`${set.exercise_id}:${set.setnr}`} className='modal'>
-            <div className='modal-box'>
-              <h3>{set.setnr}</h3>
-            </div>
+            <form
+              onSubmit={() =>
+                editExerciseSet(set.exercise_id, set.setnr, kg, reps)
+              }
+              className='modal-box text-sm font-semibold flex flex-col justify-center'
+            >
+              <h3>Set number: {set.setnr + 1}</h3>
+              <div>
+                <Input
+                  type='number'
+                  placeholder='kg'
+                  defaultValue={set.reps}
+                  onChange={(e) => setKg(e.target.value)}
+                />
+                <Input
+                  type='number'
+                  placeholder='kg'
+                  defaultValue={set.reps}
+                  onChange={(e) => setReps(e.target.value)}
+                />
+              </div>
+              <button type='submit'>Edit</button>
+              <button
+                onClick={() => {
+                  deleteExerciseSet(set.exercise_id, set.setnr);
+                  window.location.reload();
+                }}
+                type='button'
+                className='text-red-400'
+              >
+                Delete
+              </button>
+            </form>
             <form method='dialog' className='modal-backdrop'>
               <button />
             </form>
@@ -61,6 +83,7 @@ export default function SetClient(props: {
           exercise_id={props.exercise_id}
           set={props.set}
           setSet={props.setSet}
+          setShowNewSet={setShowNewSet}
         />
       )}
       <NewSet open={setShowNewSet} />

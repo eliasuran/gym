@@ -75,3 +75,47 @@ export async function getExerciseSets(exercise_id: string) {
 
   return await res.json();
 }
+
+export async function editExerciseSet(
+  exercise_id: string,
+  setnr: number,
+  kg: number,
+  reps: number,
+) {
+  const res = await fetch('api/sets', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      exercise_id: exercise_id,
+      setnr: setnr,
+      kg: kg,
+      reps: reps,
+    }),
+  });
+
+  if (res.status !== 200) {
+    console.error('Failed to edit set');
+    return await res.json();
+  }
+
+  return await res.json();
+}
+
+export async function deleteExerciseSet(exercise_id: string, setnr: number) {
+  const res = await fetch('api/sets', {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      exercise_id: exercise_id,
+      setnr: setnr,
+    }),
+  });
+
+  if (res.status !== 200) {
+    console.error('Failed to delete set');
+  }
+}
