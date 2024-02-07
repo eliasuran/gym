@@ -20,14 +20,7 @@ export default function SetClient(props: {
     <div className='flex p-2 flex-wrap gap-4 min-h-16 items-center'>
       {props.set.map((set: Set) => (
         <div key={`${set.exercise_id}:${set.setnr}`}>
-          <button
-            onClick={() =>
-              document
-                .getElementById(`${set.exercise_id}:${set.setnr}`)
-                ?.showModal()
-            }
-            className='btn btn-secondary flex justify-between text-xl'
-          >
+          <button className='btn btn-secondary flex justify-between text-xl'>
             <div className='flex flex-col'>
               <span className='text-xs'>kg</span>
               {set.kg}
