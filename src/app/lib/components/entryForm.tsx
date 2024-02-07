@@ -24,7 +24,7 @@ export default function EntryForm(props: {
           const submit = await props.handleSubmit(e, props.values);
           if (submit.status !== 200) {
             setLoading(false);
-            setError(submit.error);
+            setError('Error');
           }
         }}
         className='z-50 fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2  px-14 py-14 card flex flex-col justify-center items-center gap-4 bg-base-100 drop-shadow-xl'
