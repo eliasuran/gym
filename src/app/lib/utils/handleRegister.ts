@@ -18,12 +18,7 @@ export async function handleRegister(
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password }),
     });
-    if (res.status === 200) {
-      const data = await res.json();
-      console.log(data.data);
-    } else {
-      return { status: res.status, error: 'User already exists' };
-    }
+    return await res.json();
   } catch (error) {
     return { status: 500, error: 'Internal server error' };
   }

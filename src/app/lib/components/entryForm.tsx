@@ -21,8 +21,8 @@ export default function EntryForm(props: {
       <form
         onSubmit={async (e) => {
           setLoading(true);
-          const submit = await props.handleSubmit(e, props.values);
-          if (submit.status !== 200) {
+          const res = await props.handleSubmit(e, props.values);
+          if (res) {
             setLoading(false);
             setError('Error');
           }
