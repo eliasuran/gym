@@ -16,7 +16,12 @@ export default function AddSetInfo(props: {
   async function addSet(e: React.FormEvent<HTMLFormElement>) {
     props.setSet([
       ...props.set,
-      { exercise_id: props.exercise_id, kg: kg, reps: reps },
+      {
+        exercise_id: props.exercise_id,
+        kg: kg,
+        reps: reps,
+        setnr: props.set.length,
+      },
     ] as Set[]);
     e.preventDefault();
     await addExerciseSet(props.exercise_id, parseInt(kg), parseInt(reps));

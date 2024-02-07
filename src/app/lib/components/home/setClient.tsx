@@ -24,7 +24,7 @@ export default function SetClient(props: {
             onClick={() =>
               document
                 .getElementById(`${set.exercise_id}:${set.setnr}`)
-                .showModal()
+                ?.showModal()
             }
             className='btn btn-secondary flex justify-between text-xl'
           >
@@ -40,22 +40,35 @@ export default function SetClient(props: {
           </button>
           <dialog id={`${set.exercise_id}:${set.setnr}`} className='modal'>
             <form
-              onSubmit={() =>
-                editExerciseSet(set.exercise_id, set.setnr, kg, reps)
-              }
-              className='modal-box text-sm font-semibold flex flex-col justify-center'
+              onSubmit={() => {
+                if (kg === 0 && reps === 0)
+                  editExerciseSet(set.exercise_id, set.setnr, set.kg, set.reps);
+                else if (kg === 0)
+                  editExerciseSet(set.exercise_id, set.setnr, set.kg, reps);
+                else if (reps === 0)
+                  editExerciseSet(set.exercise_id, set.setnr, kg, set.reps);
+                else editExerciseSet(set.exercise_id, set.setnr, kg, reps);
+
+                setKg(0);
+                setReps(0);
+              }}
+              className='modal-box bg-primary text-sm font-semibold flex flex-col justify-center text-primary-content'
             >
               <h3>Set number: {set.setnr + 1}</h3>
               <div>
+                <label htmlFor='kg'>kg:</label>
                 <Input
+                  id='kg'
                   type='number'
                   placeholder='kg'
-                  defaultValue={set.reps}
+                  defaultValue={set.kg}
                   onChange={(e) => setKg(e.target.value)}
                 />
+                <label htmlFor='reps'>reps:</label>
                 <Input
+                  id='reps'
                   type='number'
-                  placeholder='kg'
+                  placeholder='reps'
                   defaultValue={set.reps}
                   onChange={(e) => setReps(e.target.value)}
                 />
@@ -86,7 +99,7 @@ export default function SetClient(props: {
           setShowNewSet={setShowNewSet}
         />
       )}
-      <NewSet open={setShowNewSet} />
+      {!showNewSet && <NewSet open={setShowNewSet} />}
     </div>
   );
 }

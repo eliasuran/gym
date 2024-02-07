@@ -1,27 +1,48 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { QueryResultRow } from 'pg';
 import { LineChart } from './lineChart';
 
-export default function Stats(props: { exercises: QueryResultRow[] }) {
-  const [selectedExercise, setSelectedExercise] = useState<QueryResultRow>(
-    props.exercises[0],
+export default function Stats(props: {
+  exercises: QueryResultRow[];
+  stats: QueryResultRow[];
+}) {
+  const tempStats = [];
+
+  for (let i = 0; i < 10; i++) {
+    tempStats.push(i);
+  }
+
+  const [filteredStats, setFilteredStats] = useState<QueryResultRow[]>(
+    props.stats,
   );
 
-  const tempStats = [1, 2];
+  function filterStats(selected: string) {
+    setFilteredStats(
+      props.stats.filter((item) => {
+        return selected === item.exercise_name;
+      }),
+    );
+  }
+
+  useEffect(() => console.log(filteredStats), [filteredStats]);
+
   return (
     <>
       <div className='flex justify-between'>
-        <Selector items={props.exercises} setSelected={setSelectedExercise} />
+        <Selector items={props.exercises} filterStats={filterStats} />
       </div>
-      <h1>slected: {selectedExercise.name}</h1>
-      <LineChart labels={props.exercises} stats={tempStats} />
+      <LineChart labels={tempStats} stats={tempStats} />
+      <h1>Advanced stats</h1>
     </>
   );
 }
 
-function Selector(props: { items: QueryResultRow[]; setSelected: Function }) {
+function Selector(props: {
+  items: QueryResultRow[];
+  filterStats: (selected: string) => void;
+}) {
   const [filteredExercises, setFilteredExercises] = useState<QueryResultRow[]>(
     props.items,
   );
@@ -32,6 +53,7 @@ function Selector(props: { items: QueryResultRow[]; setSelected: Function }) {
       }),
     );
   }
+
   return (
     <details className='dropdown w-full'>
       <summary className='btn btn-primary m-1'>open</summary>
@@ -45,7 +67,7 @@ function Selector(props: { items: QueryResultRow[]; setSelected: Function }) {
         <ul>
           {filteredExercises.slice(0, 5).map((item) => (
             <li key={item.id}>
-              <button onClick={() => props.setSelected(item.name)}>
+              <button onClick={() => props.filterStats(item.name)}>
                 {item.name}
               </button>
             </li>

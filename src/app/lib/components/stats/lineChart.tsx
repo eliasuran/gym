@@ -23,7 +23,7 @@ ChartJS.register(
   Legend,
 );
 
-export const LineChart = (props: { labels: QueryResultRow[]; stats: any }) => {
+export const LineChart = (props: { labels: number[]; stats: any }) => {
   const options: ChartOptions<'line'> = {
     responsive: true,
     plugins: {
@@ -38,7 +38,7 @@ export const LineChart = (props: { labels: QueryResultRow[]; stats: any }) => {
   };
 
   const data: ChartData<'line'> = {
-    labels: props.labels.map((label) => label.name),
+    labels: props.labels.map((label) => label),
     datasets: [
       {
         label: 'dataset',

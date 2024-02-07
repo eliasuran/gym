@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import SetClient from './setClient';
 import { Set, getExerciseSets } from '../../utils/exercises';
 import { Icon } from '@iconify/react/dist/iconify.js';
@@ -10,9 +10,10 @@ export default function Exercise(props: {
 }) {
   const [set, setSet] = useState([] as Set[]);
 
-  useEffect(() => {
-    getExerciseSets(props.exercise_id).then((data) => setSet(data.sets));
-  }, [props.exercise_id]);
+  useMemo(
+    () => getExerciseSets(props.exercise_id).then((data) => setSet(data.sets)),
+    [props.exercise_id],
+  );
   return (
     <div className='bg-primary text-primary-content p-2 card overflow-hidden text-center relative'>
       <button

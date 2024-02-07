@@ -1,5 +1,3 @@
-import type { Session } from '../types/session';
-import { getSession } from './session';
 import { query } from '../data';
 
 export interface Stat {
@@ -23,8 +21,7 @@ export interface Stat {
   setnr: number;
 }
 
-export async function getStats() {
-  const session: Session = await getSession();
+export async function getStats(user_id: string, date: string) {
   const stats = await query(
     `SELECT 
       session.id, 
@@ -42,11 +39,9 @@ export async function getStats() {
     JOIN
       exercises ON exercises.id = exercise.exercise_id
     WHERE 
-      session.user_id = $1`,
-    [session.user_id],
+      session.user_id = $1 AND session.date = $2`,
+    [user_id, date],
   );
-
-  console.log(stats.rows);
 
   return stats.rows;
 }

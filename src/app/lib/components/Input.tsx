@@ -1,4 +1,5 @@
 export const Input = (props: {
+  id?: string;
   type: string;
   placeholder: string;
   value?: string | number;
