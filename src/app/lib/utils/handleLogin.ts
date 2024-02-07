@@ -15,6 +15,7 @@ export async function handleLogin(
     } else {
       const data = await res.json();
       console.log(data.error);
+      return { status: res.status, error: data.error };
     }
   } catch (error) {
     console.log(error);

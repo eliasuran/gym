@@ -5,7 +5,12 @@ export async function handleRegister(
   e.preventDefault();
   const [username, password, confirmPassword] = values;
   if (password !== confirmPassword) {
-    return console.log('Passwords do not match');
+    console.log('Passwords do not match');
+    return { status: 400, error: 'Passwords do not match' };
+  }
+  if (password.length < 8) {
+    console.log('Password must be at least 8 characters');
+    return { status: 400, error: 'Password must be at least 8 characters' };
   }
   try {
     const res = await fetch('/api/register', {
@@ -17,9 +22,9 @@ export async function handleRegister(
       const data = await res.json();
       console.log(data.data);
     } else {
-      console.log(await res.json());
+      return { status: res.status, error: 'User already exists' };
     }
   } catch (error) {
-    console.log(error);
+    return { status: 500, error: 'Internal server error' };
   }
 }

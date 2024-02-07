@@ -29,6 +29,17 @@ export async function POST(request: Request) {
         [username, user.rows[0].password],
       );
 
+      const existingSession = await query(
+        'SELECT * FROM login_sessions WHERE user_id = $1',
+        [res.rows[0].id],
+      );
+
+      if (existingSession.rows.length > 0) {
+        await query('DELETE FROM login_sessions WHERE user_id = $1', [
+          res.rows[0].id,
+        ]);
+      }
+
       const sessionId = v4();
       await query(
         'INSERT INTO login_sessions (id, user_id, user_username) VALUES ($1, $2, $3)',
