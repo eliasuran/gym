@@ -21,6 +21,7 @@ export default function Client(props: {
           key={`${exercise.session_id}:${exercise.exercise_id}`}
           exercise_id={exercise.id}
           exercise={exercise.name}
+          exercise_type={exercise.name}
         />
       ))}
       <NewExercise

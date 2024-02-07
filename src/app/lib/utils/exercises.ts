@@ -120,3 +120,26 @@ export async function deleteExerciseSet(exercise_id: string, setnr: number) {
     console.error('Failed to delete set');
   }
 }
+
+/////// CARDIO ///////
+export async function addExerciseSetCardio(
+  exercise_id: string,
+  km: number,
+  time: number,
+) {
+  const res = await fetch('api/sets', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      exercise_id: exercise_id,
+      kg: km,
+      reps: time,
+    }),
+  });
+
+  if (res.status !== 200) {
+    console.error('Failed to add set');
+  }
+}

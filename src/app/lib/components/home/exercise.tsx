@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import SetClient from './setClient';
+import SetClientCardio from './setClientCardio';
 import { Set, getExerciseSets } from '../../utils/exercises';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import { deleteExercise } from '../../utils/exercises';
@@ -7,6 +8,7 @@ import { deleteExercise } from '../../utils/exercises';
 export default function Exercise(props: {
   exercise_id: string;
   exercise: string;
+  exercise_type: string;
 }) {
   const [set, setSet] = useState([] as Set[]);
 
@@ -26,7 +28,15 @@ export default function Exercise(props: {
         <Icon icon='material-symbols:close' />
       </button>
       <h2>{props.exercise}</h2>
-      <SetClient exercise_id={props.exercise_id} set={set} setSet={setSet} />
+      {props.exercise_type === 'Running' ? (
+        <SetClientCardio
+          exercise_id={props.exercise_id}
+          set={set}
+          setSet={setSet}
+        />
+      ) : (
+        <SetClient exercise_id={props.exercise_id} set={set} setSet={setSet} />
+      )}
     </div>
   );
 }
