@@ -12,7 +12,6 @@ export default function EntryForm(props: {
   values: string[];
   children: React.ReactNode;
   name: string;
-  loading: boolean;
 }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
