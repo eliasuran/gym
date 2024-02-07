@@ -1,19 +1,18 @@
 import { QueryResultRow } from 'pg';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Exercises } from '../utils/exercises';
+import { Stat } from '../utils/stats';
 
 export interface AdvancedStats {
   selected: Exercises;
-  setSelected: (selected: Exercises) => void;
-  filteredStats: QueryResultRow[];
+  setSelected: Dispatch<SetStateAction<Exercises>>;
+  filteredStats: Stat[];
   highest: number;
 }
 
 // give original version of stats
 export function useAdvancedStats(stats: QueryResultRow[]) {
-  const [selected, setSelected] = useState({
-    name: 'Lat Pulldown',
-  } as Exercises);
+  const [selected, setSelected] = useState({} as Exercises);
 
   const [filteredStats, setFilteredStats] = useState(stats);
 

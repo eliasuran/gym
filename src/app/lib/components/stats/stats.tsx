@@ -1,17 +1,20 @@
 'use client';
 
-import { useState } from 'react';
-import { QueryResultRow } from 'pg';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { LineChart } from './lineChart';
-import { AdvancedStats, useAdvancedStats } from '../../hooks/useAdvancedStats';
+import { useAdvancedStats } from '../../hooks/useAdvancedStats';
+import { Stat } from '../../utils/stats';
 import { Exercises } from '../../utils/exercises';
 
 export default function Stats(props: {
   exercises: Exercises[];
-  stats: QueryResultRow[];
+  stats: Stat[];
 }) {
-  const { selected, setSelected, filteredStats, highest }: AdvancedStats =
-    useAdvancedStats(props.stats);
+  const { selected, setSelected, filteredStats, highest } = useAdvancedStats(
+    props.stats,
+  );
+
+  console.log(filteredStats);
 
   const tempStats = [];
 
@@ -41,7 +44,7 @@ export default function Stats(props: {
 
 function Selector(props: {
   items: Exercises[];
-  setSelected: (exercise: Exercises) => void;
+  setSelected: Dispatch<SetStateAction<Exercises>>;
 }) {
   const [filteredExercises, setFilteredExercises] = useState<Exercises[]>(
     props.items,

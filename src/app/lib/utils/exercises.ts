@@ -10,7 +10,7 @@ export interface Exercises {
 /////// EXERCISES ///////
 export async function getExercises(query: any) {
   const res = await query('SELECT * FROM exercises');
-  const data: QueryResultRow[] = res.rows;
+  const data: Exercises[] = res.rows;
   return data;
 }
 
