@@ -7,7 +7,7 @@ import { AdvancedStats, useAdvancedStats } from '../../hooks/useAdvancedStats';
 import { Exercises } from '../../utils/exercises';
 
 export default function Stats(props: {
-  exercises: QueryResultRow[];
+  exercises: Exercises[];
   stats: QueryResultRow[];
 }) {
   const { selected, setSelected, filteredStats, highest }: AdvancedStats =
@@ -40,10 +40,10 @@ export default function Stats(props: {
 }
 
 function Selector(props: {
-  items: QueryResultRow[];
+  items: Exercises[];
   setSelected: (exercise: Exercises) => void;
 }) {
-  const [filteredExercises, setFilteredExercises] = useState<QueryResultRow[]>(
+  const [filteredExercises, setFilteredExercises] = useState<Exercises[]>(
     props.items,
   );
   function search(e: React.ChangeEvent<HTMLInputElement>) {
@@ -65,7 +65,7 @@ function Selector(props: {
           onChange={(e) => search(e)}
         />
         <ul>
-          {filteredExercises.slice(0, 5).map((item) => (
+          {filteredExercises.slice(0, 5).map((item: Exercises) => (
             <li key={item.id}>
               <button onClick={() => props.setSelected(item)}>
                 {item.name}
