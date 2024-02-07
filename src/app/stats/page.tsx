@@ -14,8 +14,8 @@ export default async function Page() {
   const exercises = await getExercises(query);
 
   return (
-    <div>
+    <>
       <Stats exercises={exercises} stats={stats} />
-    </div>
+    </>
   );
 }

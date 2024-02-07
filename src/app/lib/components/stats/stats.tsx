@@ -1,47 +1,47 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { QueryResultRow } from 'pg';
 import { LineChart } from './lineChart';
+import { AdvancedStats, useAdvancedStats } from '../../hooks/useAdvancedStats';
+import { Exercises } from '../../utils/exercises';
 
 export default function Stats(props: {
   exercises: QueryResultRow[];
   stats: QueryResultRow[];
 }) {
+  const { selected, setSelected, filteredStats, highest }: AdvancedStats =
+    useAdvancedStats(props.stats);
+
   const tempStats = [];
 
   for (let i = 0; i < 10; i++) {
     tempStats.push(i);
   }
-
-  const [filteredStats, setFilteredStats] = useState<QueryResultRow[]>(
-    props.stats,
-  );
-
-  function filterStats(selected: string) {
-    setFilteredStats(
-      props.stats.filter((item) => {
-        return selected === item.exercise_name;
-      }),
-    );
-  }
-
-  useEffect(() => console.log(filteredStats), [filteredStats]);
-
   return (
     <>
       <div className='flex justify-between'>
-        <Selector items={props.exercises} filterStats={filterStats} />
+        <Selector items={props.exercises} setSelected={setSelected} />
       </div>
-      <LineChart labels={tempStats} stats={tempStats} />
+      <LineChart
+        dataLabel={selected.name}
+        labels={tempStats}
+        stats={tempStats}
+      />
       <h1>Advanced stats</h1>
+      <div className='flex flex-col gap-4'>
+        <div className='border-2 border-primary rounded-box flex-grow h-24 p-2'>
+          <h2 className='font-semibold'>Highest</h2>
+          <h3>{highest}</h3>
+        </div>
+      </div>
     </>
   );
 }
 
 function Selector(props: {
   items: QueryResultRow[];
-  filterStats: (selected: string) => void;
+  setSelected: (exercise: Exercises) => void;
 }) {
   const [filteredExercises, setFilteredExercises] = useState<QueryResultRow[]>(
     props.items,
@@ -67,7 +67,7 @@ function Selector(props: {
         <ul>
           {filteredExercises.slice(0, 5).map((item) => (
             <li key={item.id}>
-              <button onClick={() => props.filterStats(item.name)}>
+              <button onClick={() => props.setSelected(item)}>
                 {item.name}
               </button>
             </li>

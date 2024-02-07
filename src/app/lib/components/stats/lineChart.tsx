@@ -11,7 +11,6 @@ import {
   Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import { QueryResultRow } from 'pg';
 
 ChartJS.register(
   CategoryScale,
@@ -23,26 +22,23 @@ ChartJS.register(
   Legend,
 );
 
-export const LineChart = (props: { labels: number[]; stats: any }) => {
+export const LineChart = (props: {
+  dataLabel: string;
+  labels: number[];
+  stats: any;
+}) => {
   const options: ChartOptions<'line'> = {
     responsive: true,
-    plugins: {
-      legend: {
-        position: 'top' as const,
-      },
-      title: {
-        display: true,
-        text: 'Chart.js Line Chart',
-      },
-    },
   };
 
   const data: ChartData<'line'> = {
     labels: props.labels.map((label) => label),
     datasets: [
       {
-        label: 'dataset',
+        label: props.dataLabel,
         data: props.stats,
+        backgroundColor: '#33cc33',
+        borderColor: '#33cc33',
       },
     ],
   };

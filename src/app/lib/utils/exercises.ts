@@ -3,7 +3,8 @@ import { Session } from '../types/session';
 
 export interface Exercises {
   id: number;
-  exercise: string;
+  name: string;
+  type: string;
 }
 
 /////// EXERCISES ///////
