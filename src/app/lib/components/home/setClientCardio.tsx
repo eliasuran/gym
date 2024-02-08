@@ -26,13 +26,13 @@ export default function SetClientCardio(props: {
       >
         <Input
           type='number'
-          placeholder='kg'
+          placeholder='km'
           value={km}
           onChange={(e) => setKm(e.target.value)}
         />
         <Input
           type='number'
-          placeholder='reps'
+          placeholder='time'
           value={time}
           onChange={(e) => setTime(e.target.value)}
         />

@@ -5,8 +5,8 @@ import './globals.css';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: '3 clicks workout app',
-  description: 'very cool',
+  title: 'mpu gym',
+  description: 'quickly track your workout and view advanced stats',
 };
 
 import { getSession } from './lib/utils/session';
@@ -21,8 +21,10 @@ export default async function RootLayout({
   const session = await getSession();
   return (
     <html lang='en'>
-      <body className={`${inter.className}`}>
-        <div className='absolute inset-0 overflow-hidden bg-base-100 text-base-content font-light p-4'>
+      <body
+        className={`absolute inset-0 overflow-x-hidden bg-base-100 text-base-content font-light p-4 ${inter.className}`}
+      >
+        <div>
           {session ? (
             <>
               {children}
