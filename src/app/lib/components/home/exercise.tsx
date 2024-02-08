@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import SetClient from './setClient';
 import SetClientCardio from './setClientCardio';
 import { Set, getExerciseSets } from '../../utils/exercises';
@@ -12,10 +12,9 @@ export default function Exercise(props: {
 }) {
   const [set, setSet] = useState([] as Set[]);
 
-  useMemo(
-    () => getExerciseSets(props.exercise_id).then((data) => setSet(data.sets)),
-    [props.exercise_id],
-  );
+  useEffect(() => {
+    getExerciseSets(props.exercise_id).then((data) => setSet(data.sets));
+  }, []);
   return (
     <div className='bg-primary text-primary-content p-2 card overflow-hidden text-center relative'>
       <button
